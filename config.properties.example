@@ -1,0 +1,39 @@
+# Catapult VUSION ESL Driver Configuration
+# Copy this file to config.properties and update with your settings
+
+# =============================================================================
+# Server Configuration
+# =============================================================================
+
+# Listen address for incoming connections
+# Leave blank or set to "localhost" for localhost only (default, most secure)
+# Set to "0.0.0.0" to listen on all network interfaces
+server.address=
+
+# Port to listen on for Catapult POST requests
+server.port=8080
+
+# =============================================================================
+# Vusion API Configuration
+# =============================================================================
+
+# Vusion API base URL
+vusion.api.baseUrl=https://api-us.vusion.io/vlink-pro/v1
+
+# Vusion API subscription key (Ocp-Apim-Subscription-Key header)
+# REQUIRED - obtain from SES Vusion
+vusion.api.subscriptionKey=YOUR_SUBSCRIPTION_KEY_HERE
+
+# =============================================================================
+# Store Mappings
+# =============================================================================
+# Map Catapult store numbers to Vusion store IDs
+# Format: store.<CatapultStoreNumber>=<VusionStoreId>
+#
+# Stores not listed here will be ignored (e.g., HQ)
+# Example:
+#   store.RS1=okimoto_corp_us.waianae_store
+#   store.RS2=okimoto_corp_us.ecrs_test_store
+
+store.RS1=okimoto_corp_us.ecrs_test_store
+
