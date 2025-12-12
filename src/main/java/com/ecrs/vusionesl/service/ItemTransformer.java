@@ -289,9 +289,25 @@ public class ItemTransformer {
     }
     
     /**
-     * Formats promo date for display (e.g., "12/31/2025").
+     * Formats promo date for display with 2-digit year (e.g., "12/31/25").
+     * Input: "2025-12-31T10:35:16"
+     * Output: "12/31/25"
      */
     private String formatPromoDateForDisplay(String isoDate) {
-        return formatPromoDate(isoDate);
+        if (isoDate == null || isoDate.isEmpty()) {
+            return null;
+        }
+        try {
+            // Extract date part (YYYY-MM-DD)
+            String datePart = isoDate.split("T")[0];
+            String[] parts = datePart.split("-");
+            if (parts.length == 3) {
+                String year2Digit = parts[0].substring(2);  // "2025" -> "25"
+                return parts[1] + "/" + parts[2] + "/" + year2Digit;  // MM/DD/YY
+            }
+        } catch (Exception e) {
+            logger.warn("Failed to parse promo date for display: {}", isoDate, e);
+        }
+        return isoDate;  // Return as-is if parsing fails
     }
 }
