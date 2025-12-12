@@ -194,8 +194,9 @@ public class ItemTransformer {
     /**
      * Adds power field custom fields to the Vusion item.
      * Mapped fields:
-     *   - WIC: if powerField3 contains "Y" → "WIC", otherwise empty
-     *   - DABUX: if powerField4 contains "DA BUX" → "0002", otherwise empty
+     *   - WIC: if powerField3 contains "Y" → "WIC"
+     *   - DABUX: if powerField4 contains "DA BUX" → "0002"
+     *   - IBMCode: if powerField4 contains "HI-5" → "HI-5"
      *   - WHItem ← powerField5
      */
     private void addPowerFieldCustomFields(VusionItem vusionItem, CatapultItem item) {
@@ -203,16 +204,20 @@ public class ItemTransformer {
         String pf3 = item.getPowerField3();
         if (pf3 != null && pf3.toUpperCase().contains("Y")) {
             vusionItem.addCustomField("WIC", "WIC");
-        } else {
-            vusionItem.addCustomField("WIC", "");
         }
         
-        // DABUX: if powerField4 contains "DA BUX" → "0002"
+        // DABUX and IBMCode from PowerField4 (can have both)
         String pf4 = item.getPowerField4();
-        if (pf4 != null && pf4.toUpperCase().contains("DA BUX")) {
-            vusionItem.addCustomField("DABUX", "0002");
-        } else {
-            vusionItem.addCustomField("DABUX", "");
+        if (pf4 != null) {
+            String pf4Upper = pf4.toUpperCase();
+            // DABUX: "0002" if contains "DA BUX"
+            if (pf4Upper.contains("DA BUX")) {
+                vusionItem.addCustomField("DABUX", "0002");
+            }
+            // IBMCode: "HI-5" if contains "HI-5"
+            if (pf4Upper.contains("HI-5")) {
+                vusionItem.addCustomField("IBMCode", "HI-5");
+            }
         }
         
         // WHItem from PowerField5
